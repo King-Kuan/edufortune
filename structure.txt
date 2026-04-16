@@ -1,0 +1,65 @@
+edufortune-admin/
+├── app/
+│   ├── (auth)/
+│   │   ├── login/
+│   │   │   └── page.tsx
+│   │   └── layout.tsx
+│   ├── (dashboard)/
+│   │   ├── layout.tsx
+│   │   ├── superadmin/
+│   │   │   ├── page.tsx                  ← Super Admin dashboard
+│   │   │   ├── schools/
+│   │   │   │   ├── page.tsx              ← All schools list
+│   │   │   │   └── new/page.tsx          ← Create school
+│   │   │   └── settings/page.tsx
+│   │   └── headteacher/
+│   │       ├── page.tsx                  ← Head Teacher dashboard
+│   │       ├── academic-years/page.tsx
+│   │       ├── classes/page.tsx
+│   │       ├── subjects/page.tsx
+│   │       ├── teachers/page.tsx
+│   │       ├── students/
+│   │       │   ├── page.tsx
+│   │       │   └── [id]/page.tsx
+│   │       ├── marks/page.tsx
+│   │       ├── attendance/page.tsx
+│   │       ├── promotions/page.tsx
+│   │       └── reports/page.tsx
+│   ├── verify/[token]/page.tsx           ← Public QR verification
+│   ├── layout.tsx
+│   └── globals.css
+├── components/
+│   ├── ui/                               ← shadcn components
+│   ├── layout/
+│   │   ├── Sidebar.tsx
+│   │   ├── Header.tsx
+│   │   └── PageWrapper.tsx
+│   ├── schools/
+│   │   ├── SchoolCard.tsx
+│   │   ├── SchoolHealthBadge.tsx
+│   │   └── CreateSchoolForm.tsx
+│   ├── students/
+│   │   ├── StudentTable.tsx
+│   │   └── EnrollStudentForm.tsx
+│   ├── reports/
+│   │   ├── ProgressiveReport.tsx         ← @react-pdf template
+│   │   ├── AnnualReport.tsx              ← @react-pdf template
+│   │   └── NurseryReport.tsx
+│   └── emails/
+│       ├── SchoolInvite.tsx              ← React Email template
+│       └── TeacherInvite.tsx
+├── lib/
+│   ├── firebase/
+│   │   ├── config.ts
+│   │   ├── auth.ts
+│   │   └── firestore.ts
+│   ├── utils/
+│   │   ├── registration.ts               ← Reg number generator
+│   │   ├── grading.ts                    ← REB grading logic
+│   │   └── reportToken.ts               ← QR token generator
+│   └── types/
+│       └── index.ts                      ← All TypeScript types
+├── middleware.ts                          ← Auth + role protection
+├── tailwind.config.ts
+├── .env.local.example
+└── package.json

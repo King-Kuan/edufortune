@@ -1,0 +1,124 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --font-plus-jakarta: 'Plus Jakarta Sans', sans-serif;
+}
+
+/* ── Force dark mode globally ─────────────────────────────────────────────── */
+html {
+  color-scheme: dark;
+}
+
+body {
+  background-color: #0d1117;
+  color: #cdd9e5;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar        { width: 6px; height: 6px; }
+::-webkit-scrollbar-track  { background: #0d1117; }
+::-webkit-scrollbar-thumb  { background: #30363d; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #484f58; }
+
+/* ── Focus ring ───────────────────────────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid #1565e0;
+  outline-offset: 2px;
+}
+
+/* ── Selection ────────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(21, 101, 224, 0.35);
+  color: #e6edf3;
+}
+
+/* ── Utility classes ──────────────────────────────────────────────────────── */
+@layer utilities {
+  .text-gradient-brand {
+    background: linear-gradient(135deg, #1565e0 0%, #f57c00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .border-subtle {
+    border-color: #21262d;
+  }
+
+  .surface-card {
+    background-color: #161b22;
+    border: 1px solid #21262d;
+    border-radius: 8px;
+  }
+
+  .surface-elevated {
+    background-color: #21262d;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+  }
+}
+
+/* ── Table styles ─────────────────────────────────────────────────────────── */
+.ef-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.ef-table th {
+  text-align: left;
+  padding: 10px 12px;
+  font-weight: 500;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #6e7681;
+  border-bottom: 1px solid #21262d;
+}
+
+.ef-table td {
+  padding: 12px;
+  border-bottom: 1px solid #161b22;
+  color: #b1bac4;
+}
+
+.ef-table tr:hover td {
+  background-color: #161b22;
+}
+
+/* ── Health status badges ─────────────────────────────────────────────────── */
+.badge-optimal {
+  background-color: #0d2e18;
+  color: #3fb950;
+  border: 1px solid rgba(63,185,80,0.2);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge-below {
+  background-color: #2d2000;
+  color: #d29922;
+  border: 1px solid rgba(210,153,34,0.2);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.badge-crowded {
+  background-color: #2d0f0e;
+  color: #f85149;
+  border: 1px solid rgba(248,81,73,0.2);
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+}
