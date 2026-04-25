@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useEffect, useState } from 'react'
 import DashboardLayout from '@/components/layout/DashboardLayout'
 import { getActiveAcademicYear, getClasses, createStudent } from '@/lib/firebase/firestore'
