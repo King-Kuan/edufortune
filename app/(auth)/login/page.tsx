@@ -25,11 +25,15 @@ function LoginForm() {
     try {
       const user = await signIn(email, password)
 
-      // Set session cookie (browser-safe btoa)
-      const payload = btoa(
-        JSON.stringify({ role: user.role, schoolId: user.schoolId, uid: user.uid, name: user.name })
-      )
-      document.cookie = `ef-session=${payload}; path=/; SameSite=Strict`
+      // Set session cookie — base64 encoded, readable by Edge middleware
+      const sessionData = JSON.stringify({
+        role:     user.role,
+        schoolId: user.schoolId ?? '',
+        uid:      user.uid,
+        name:     user.name,
+      })
+      const payload = btoa(unescape(encodeURIComponent(sessionData)))
+      document.cookie = `ef-session=${payload}; path=/; SameSite=Lax`
 
       // First login → force password change
       if (user.isFirstLogin) {

@@ -74,7 +74,7 @@ export default function DashboardLayout({
 
   async function handleSignOut() {
     await signOut()
-    document.cookie = 'ef-session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+    document.cookie = 'ef-session=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax'
     router.push('/login')
   }
 
