@@ -1,11 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import DashboardLayout from '@/components/layout/DashboardLayout'
 import { getActiveAcademicYear, getClasses, getSubjects } from '@/lib/firebase/firestore'
 import { db } from '@/lib/firebase/config'
-import { addDoc, collection, deleteDoc, doc, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, deleteDoc, doc } from 'firebase/firestore'
 import type { AcademicYear, Class, Subject } from '@/lib/types'
 
 function useSchoolContext() {
@@ -57,7 +57,7 @@ const DEFAULT_SUBJECTS: Record<string, { name: string; maxMT: number; maxEX: num
   ],
 }
 
-export default function SubjectsPage() {
+function SubjectsContent() {
   const { schoolId, userName, schoolName } = useSchoolContext()
   const searchParams = useSearchParams()
   const preselectedClassId = searchParams.get('classId') ?? ''
@@ -363,5 +363,13 @@ export default function SubjectsPage() {
         )}
       </div>
     </DashboardLayout>
+  )
+}
+
+export default function SubjectsPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#0d1117]" />}>
+      <SubjectsContent />
+    </Suspense>
   )
 }
