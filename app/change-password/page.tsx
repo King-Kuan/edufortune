@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { auth, completeFirstLogin } from '@/lib/firebase/auth'
 import { readSession, writeSession } from '@/lib/utils/session'
+import { EduFortuneLogo } from '@/components/ui/Logos'
 
 export default function ChangePasswordPage() {
   const router = useRouter()
@@ -53,7 +54,7 @@ export default function ChangePasswordPage() {
       <div className="w-full max-w-md mx-4">
 
         <div className="text-center mb-8">
-          <img src="/logo.png" alt="EduFortune" width={56} height={56} className="mx-auto mb-3 rounded-lg" />
+          <EduFortuneLogo size={56} className="mx-auto mb-3 rounded-lg" />
           <h1 className="text-xl font-semibold text-[#e6edf3]">Set your password</h1>
           <p className="text-sm text-[#6e7681] mt-1">
             This is your first login. Please set a secure password to continue.

@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic'
 import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { signIn } from '@/lib/firebase/auth'
+import { EduFortuneLogo, PalaceLogo } from '@/components/ui/Logos'
 
 function LoginForm() {
   const router       = useRouter()
@@ -81,13 +82,7 @@ function LoginForm() {
         {/* Logo + brand */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center mb-4">
-            <img
-              src="/logo.png"
-              alt="EduFortune"
-              width={64}
-              height={64}
-              className="rounded-lg"
-            />
+            <EduFortuneLogo size={64} className="rounded-lg" />
           </div>
           <h1
             className="text-2xl font-semibold text-[#e6edf3] tracking-tight"
@@ -174,7 +169,7 @@ function LoginForm() {
 
         {/* Footer branding */}
         <div className="text-center mt-6 flex items-center justify-center gap-2">
-          <img src="/palace.png" alt="The Palace, Inc." width={16} height={16} className="rounded-sm opacity-60" />
+          <PalaceLogo size={18} className="opacity-80" />
           <p className="text-xs text-[#484f58]">
             Powered by <span className="text-[#6e7681]">EduFortune</span>
             {' · '}
