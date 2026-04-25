@@ -13,7 +13,7 @@ function useSchoolContext() {
   try {
     const session = document.cookie.split('; ').find(r => r.startsWith('ef-session='))?.split('=')[1]
     if (!session) return { schoolId: '', schoolCode: '', userName: '', schoolName: '' }
-    const p = JSON.parse(Buffer.from(session, 'base64').toString('utf-8'))
+    const p = JSON.parse(atob(session))
     return {
       schoolId:   p.schoolId ?? '',
       schoolCode: p.schoolCode ?? '',

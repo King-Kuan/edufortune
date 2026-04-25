@@ -23,10 +23,10 @@ export default function LoginPage() {
     try {
       const user = await signIn(email, password)
 
-      // Set session cookie
-      const payload = Buffer.from(
-        JSON.stringify({ role: user.role, schoolId: user.schoolId, uid: user.uid })
-      ).toString('base64')
+      // Set session cookie (browser-safe btoa)
+      const payload = btoa(
+        JSON.stringify({ role: user.role, schoolId: user.schoolId, uid: user.uid, name: user.name })
+      )
       document.cookie = `ef-session=${payload}; path=/; SameSite=Strict`
 
       // First login → force password change

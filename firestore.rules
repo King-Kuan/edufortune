@@ -1,0 +1,126 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helpers ────────────────────────────────────────────────────────────
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function getUserProfile() {
+      return get(/databases/$(database)/documents/userProfiles/$(request.auth.uid)).data;
+    }
+
+    function isSuperAdmin() {
+      return isAuthenticated() && getUserProfile().role == 'superadmin';
+    }
+
+    function isHeadTeacher(schoolId) {
+      return isAuthenticated()
+        && getUserProfile().role == 'headteacher'
+        && getUserProfile().schoolId == schoolId;
+    }
+
+    function isTeacher(schoolId) {
+      return isAuthenticated()
+        && getUserProfile().role == 'teacher'
+        && getUserProfile().schoolId == schoolId;
+    }
+
+    function belongsToSchool(schoolId) {
+      return isHeadTeacher(schoolId) || isTeacher(schoolId);
+    }
+
+    // ── User profiles ──────────────────────────────────────────────────────
+    match /userProfiles/{uid} {
+      allow read:   if isAuthenticated() && request.auth.uid == uid;
+      allow write:  if isAuthenticated() && request.auth.uid == uid;
+      allow create: if isSuperAdmin() || isAuthenticated();
+    }
+
+    // ── Schools ────────────────────────────────────────────────────────────
+    match /schools/{schoolId} {
+      // Super admin: full access to all schools
+      allow read, write: if isSuperAdmin();
+      // Head teacher and teachers: read their own school only
+      allow read: if belongsToSchool(schoolId);
+      // Head teacher: update their own school (logo, coat of arms)
+      allow update: if isHeadTeacher(schoolId);
+
+      // ── Academic years ──────────────────────────────────────────────────
+      match /academicYears/{yearId} {
+        allow read:  if isSuperAdmin() || belongsToSchool(schoolId);
+        allow write: if isSuperAdmin() || isHeadTeacher(schoolId);
+      }
+
+      // ── Levels ──────────────────────────────────────────────────────────
+      match /levels/{levelId} {
+        allow read:  if isSuperAdmin() || belongsToSchool(schoolId);
+        allow write: if isSuperAdmin() || isHeadTeacher(schoolId);
+      }
+
+      // ── Classes ─────────────────────────────────────────────────────────
+      match /classes/{classId} {
+        allow read:  if isSuperAdmin() || belongsToSchool(schoolId);
+        allow write: if isSuperAdmin() || isHeadTeacher(schoolId);
+      }
+
+      // ── Subjects ────────────────────────────────────────────────────────
+      match /subjects/{subjectId} {
+        allow read:  if isSuperAdmin() || belongsToSchool(schoolId);
+        allow write: if isSuperAdmin() || isHeadTeacher(schoolId);
+      }
+
+      // ── Teachers ────────────────────────────────────────────────────────
+      match /teachers/{teacherId} {
+        allow read:  if isSuperAdmin() || belongsToSchool(schoolId);
+        allow write: if isSuperAdmin() || isHeadTeacher(schoolId);
+      }
+
+      // ── Students ────────────────────────────────────────────────────────
+      match /students/{studentId} {
+        allow read:  if isSuperAdmin() || belongsToSchool(schoolId);
+        allow write: if isSuperAdmin() || isHeadTeacher(schoolId);
+        // Teachers can read students in their assigned classes
+        allow read: if isTeacher(schoolId);
+      }
+
+      // ── Marks ───────────────────────────────────────────────────────────
+      match /marks/{markId} {
+        allow read:   if isSuperAdmin() || belongsToSchool(schoolId);
+        // Head teacher and assigned teachers can write marks
+        allow write:  if isSuperAdmin() || isHeadTeacher(schoolId) || isTeacher(schoolId);
+      }
+
+      // ── Attendance ──────────────────────────────────────────────────────
+      match /attendance/{recordId} {
+        allow read:  if isSuperAdmin() || belongsToSchool(schoolId);
+        allow write: if isSuperAdmin() || isHeadTeacher(schoolId) || isTeacher(schoolId);
+      }
+
+      // ── Discipline ──────────────────────────────────────────────────────
+      match /discipline/{incidentId} {
+        allow read:  if isSuperAdmin() || belongsToSchool(schoolId);
+        allow write: if isSuperAdmin() || isHeadTeacher(schoolId) || isTeacher(schoolId);
+      }
+
+      // ── Promotions ──────────────────────────────────────────────────────
+      match /promotions/{promotionId} {
+        allow read:  if isSuperAdmin() || belongsToSchool(schoolId);
+        allow write: if isSuperAdmin() || isHeadTeacher(schoolId);
+      }
+
+      // ── Reports (metadata only) ─────────────────────────────────────────
+      match /reports/{reportId} {
+        allow read:  if isSuperAdmin() || belongsToSchool(schoolId);
+        allow write: if isSuperAdmin() || isHeadTeacher(schoolId);
+      }
+    }
+
+    // ── Verification tokens (public read for QR scanning) ──────────────────
+    match /verificationTokens/{token} {
+      allow read:  if true;  // Public — anyone with the token can verify
+      allow write: if isSuperAdmin() || isAuthenticated();
+    }
+  }
+}

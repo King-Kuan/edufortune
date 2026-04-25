@@ -1,11 +1,12 @@
-import { randomBytes } from 'crypto'
-
 /**
  * Generate a secure verification token for QR codes
+ * Uses Web Crypto API — works in browser, edge runtime, and Node.js
  * Format: 32 hex characters, URL-safe
  */
 export function generateVerificationToken(): string {
-  return randomBytes(16).toString('hex')
+  const array = new Uint8Array(16)
+  crypto.getRandomValues(array)
+  return Array.from(array).map(b => b.toString(16).padStart(2, '0')).join('')
 }
 
 /**

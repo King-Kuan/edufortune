@@ -28,7 +28,7 @@ export function middleware(request: NextRequest) {
 
   try {
     // Session cookie contains: { role, schoolId, uid } as base64 JSON
-    const payload = JSON.parse(Buffer.from(session, 'base64').toString('utf-8'))
+    const payload = JSON.parse(atob(session))
     const { role } = payload
 
     // Role-based route protection
