@@ -4,7 +4,6 @@ export const dynamic = 'force-dynamic'
 
 import { useState, Suspense } from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
-import Image from 'next/image'
 import { signIn } from '@/lib/firebase/auth'
 
 function LoginForm() {
@@ -82,7 +81,7 @@ function LoginForm() {
         {/* Logo + brand */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center mb-4">
-            <Image
+            <img
               src="/logo.png"
               alt="EduFortune"
               width={64}
@@ -175,7 +174,7 @@ function LoginForm() {
 
         {/* Footer branding */}
         <div className="text-center mt-6 flex items-center justify-center gap-2">
-          <Image src="/palace.png" alt="The Palace, Inc." width={16} height={16} className="rounded-sm opacity-60" />
+          <img src="/palace.png" alt="The Palace, Inc." width={16} height={16} className="rounded-sm opacity-60" />
           <p className="text-xs text-[#484f58]">
             Powered by <span className="text-[#6e7681]">EduFortune</span>
             {' · '}

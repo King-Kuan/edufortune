@@ -1,7 +1,6 @@
 'use client'
 
 import { usePathname, useRouter } from 'next/navigation'
-import Image from 'next/image'
 import Link from 'next/link'
 import { signOut } from '@/lib/firebase/auth'
 
@@ -86,7 +85,7 @@ export default function DashboardLayout({
 
         {/* Logo */}
         <div className="flex items-center gap-2.5 px-4 h-14 border-b border-[#21262d]">
-          <Image src="/logo.png" alt="EduFortune" width={28} height={28} className="rounded" />
+          <img src="/logo.png" alt="EduFortune" width={28} height={28} className="rounded" />
           <span
             className="text-sm font-semibold text-[#e6edf3] tracking-tight"
             style={{ fontFamily: 'var(--font-plus-jakarta)' }}
@@ -164,7 +163,7 @@ export default function DashboardLayout({
             <span>Sign out</span>
           </button>
           <div className="flex items-center gap-1.5 px-2.5 py-1">
-            <Image src="/palace.png" alt="The Palace" width={12} height={12} className="opacity-40 rounded-sm" />
+            <img src="/palace.png" alt="The Palace" width={12} height={12} className="opacity-40 rounded-sm" />
             <p className="text-[10px] text-[#30363d]">The Palace, Inc.</p>
           </div>
         </div>
