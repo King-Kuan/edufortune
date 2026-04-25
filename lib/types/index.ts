@@ -1,5 +1,5 @@
 // ─── ROLES ────────────────────────────────────────────────────────────────────
-export type UserRole = 'superadmin' | 'headteacher'
+export type UserRole = 'superadmin' | 'headteacher' | 'teacher'
 
 // ─── SCHOOL ───────────────────────────────────────────────────────────────────
 export type SchoolStatus = 'active' | 'inactive' | 'suspended'

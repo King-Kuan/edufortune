@@ -6,7 +6,7 @@ const PUBLIC_ROUTES = ['/login', '/verify']
 // Routes only for superadmin
 const SUPERADMIN_ROUTES = ['/superadmin']
 
-// Routes only for headteacher
+// Routes only for headteacher or teacher (school staff)
 const HEADTEACHER_ROUTES = ['/headteacher']
 
 export function middleware(request: NextRequest) {
